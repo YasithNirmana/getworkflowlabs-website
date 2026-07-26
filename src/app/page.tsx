@@ -10,8 +10,22 @@ import {
   Network,
   Mail,
   CheckCircle2,
-  AlertCircle
+  AlertCircle,
+  Users,
+  Building2,
+  CreditCard,
+  PieChart,
+  Wrench,
+  FileText,
+  MessageSquare,
+  BarChart3,
+  TrendingDown,
+  Zap,
+  CheckCircle,
+  TrendingUp,
+  ArrowUpRight
 } from 'lucide-react';
+import Link from 'next/link';
 
 export default function Home() {
   return (
@@ -29,6 +43,7 @@ export default function Home() {
           <div className="hidden md:flex gap-8 text-sm font-medium text-slate-600">
             <a href="#problem" className="hover:text-blue-600 transition-colors">The Problem</a>
             <a href="#what-we-do" className="hover:text-blue-600 transition-colors">What We Do</a>
+            <a href="#featured-work" className="hover:text-blue-600 transition-colors">Case Studies</a>
             <a href="#research" className="hover:text-blue-600 transition-colors">Research</a>
             <a href="#about" className="hover:text-blue-600 transition-colors">About</a>
           </div>
@@ -163,6 +178,71 @@ export default function Home() {
               <p className="text-xl md:text-2xl font-medium text-white relative z-10">
                 Rather than forcing businesses into generic software, we explore solutions tailored to the way teams actually operate.
               </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Featured Work / Case Studies Section */}
+        <section id="featured-work" className="py-24 bg-slate-950 text-white relative overflow-hidden">
+          <div className="absolute top-1/2 right-0 w-[800px] h-[800px] bg-indigo-600/10 rounded-full blur-[100px] -z-10 translate-x-1/2 -translate-y-1/2"></div>
+          
+          <div className="max-w-6xl mx-auto px-6">
+            <div className="max-w-3xl mb-16">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 text-blue-400 text-sm font-medium mb-6 border border-blue-500/20">
+                Featured Work
+              </div>
+              <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-6">
+                Case Studies
+              </h2>
+              <p className="text-lg text-slate-400">
+                Real-world examples of how we've helped businesses streamline operations through custom automation and tailored software solutions.
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {/* Case Study Card 1 */}
+              <Link href="/case-studies/property-management-system" className="group block h-full">
+                <div className="bg-slate-900/50 backdrop-blur-sm border border-slate-800 rounded-3xl overflow-hidden hover:border-slate-700 hover:bg-slate-800/50 transition-all h-full flex flex-col">
+                  {/* Abstract thumbnail replacing the full architecture diagram */}
+                  <div className="h-48 bg-slate-900 relative overflow-hidden border-b border-slate-800 p-6 flex items-center justify-center">
+                    <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '16px 16px' }}></div>
+                    <div className="flex gap-4 relative z-10 opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500">
+                       <div className="w-14 h-14 bg-blue-500/10 rounded-2xl flex items-center justify-center border border-blue-500/30 shadow-[0_0_15px_rgba(59,130,246,0.1)]">
+                         <Building2 className="w-7 h-7 text-blue-400" />
+                       </div>
+                       <div className="w-14 h-14 bg-purple-500/10 rounded-2xl flex items-center justify-center border border-purple-500/30 -ml-4 mt-6 shadow-[0_0_15px_rgba(168,85,247,0.1)]">
+                         <Settings className="w-7 h-7 text-purple-400" />
+                       </div>
+                       <div className="w-14 h-14 bg-emerald-500/10 rounded-2xl flex items-center justify-center border border-emerald-500/30 -ml-4 -mt-2 shadow-[0_0_15px_rgba(16,185,129,0.1)]">
+                         <Zap className="w-7 h-7 text-emerald-400" />
+                       </div>
+                    </div>
+                  </div>
+                  <div className="p-8 flex flex-col grow">
+                    <div className="flex items-center gap-2 mb-4">
+                       <span className="px-3 py-1 bg-slate-800/80 rounded-full text-xs font-medium text-slate-300 border border-slate-700">Property Management</span>
+                    </div>
+                    <h3 className="text-xl font-bold text-white mb-3 group-hover:text-blue-400 transition-colors">
+                      Property Management System
+                    </h3>
+                    <p className="text-sm text-slate-400 mb-8 line-clamp-3 leading-relaxed">
+                      A unified platform that centralized operations, finances, and tenant communications, moving the agency away from spreadsheets and manual tracking.
+                    </p>
+                    <div className="mt-auto flex items-center text-sm font-semibold text-blue-400 group-hover:text-blue-300 transition-colors">
+                      Read Case Study <ArrowUpRight className="w-4 h-4 ml-1.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                    </div>
+                  </div>
+                </div>
+              </Link>
+
+              {/* Placeholder for future case studies */}
+              <div className="border border-dashed border-slate-800 rounded-3xl flex flex-col items-center justify-center p-8 text-center bg-slate-900/20 h-full min-h-[400px]">
+                <div className="w-14 h-14 bg-slate-800/50 rounded-full flex items-center justify-center mb-5">
+                  <span className="text-slate-400 text-xl font-light">+</span>
+                </div>
+                <h3 className="text-lg font-semibold text-slate-300 mb-3">More Case Studies Soon</h3>
+                <p className="text-sm text-slate-500 max-w-[250px]">We are currently documenting more of our recent operational transformations.</p>
+              </div>
             </div>
           </div>
         </section>
