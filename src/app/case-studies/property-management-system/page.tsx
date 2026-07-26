@@ -57,13 +57,12 @@ export default function PropertyManagementCaseStudy() {
             </div>
           </header>
 
-          {/* Image Placeholder for actual system screenshots */}
-          <div className="mb-16 rounded-2xl bg-slate-800/50 border border-slate-700/50 p-1 flex items-center justify-center aspect-video overflow-hidden group relative">
-            <div className="absolute inset-0 bg-slate-900 flex flex-col items-center justify-center text-slate-500 z-10 transition-opacity group-hover:opacity-90">
-              <ImageIcon className="w-12 h-12 mb-4 opacity-50" />
-              <p className="font-medium">System Screenshot Space</p>
-              <p className="text-sm opacity-70">Add your actual application screenshots here</p>
-            </div>
+          <div className="mb-16 rounded-2xl bg-slate-800/50 border border-slate-700/50 p-1 overflow-hidden aspect-video relative">
+            <img 
+              src="/screenshot.png" 
+              alt="Property Management System Screenshot" 
+              className="w-full h-full object-contain rounded-xl"
+            />
           </div>
 
           <div className="space-y-20">
