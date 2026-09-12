@@ -364,8 +364,11 @@ export default function Home() {
           <div className="text-center md:text-left">
             <p className="text-sm">Helping businesses streamline operations through automation and AI.</p>
           </div>
-          <div className="text-sm">
-            © 2026 Workflow Labs
+          <div className="text-sm flex flex-col md:items-end items-center gap-1">
+            <span>© 2026 Workflow Labs</span>
+            <Link href="/anti-spam-policy" className="text-slate-500 hover:text-white transition-colors">
+              Anti-Spam &amp; Outreach Policy
+            </Link>
           </div>
         </div>
       </footer>
