@@ -23,7 +23,11 @@ import {
   Zap,
   CheckCircle,
   TrendingUp,
-  ArrowUpRight
+  ArrowUpRight,
+  Sparkles,
+  Inbox,
+  Search,
+  Layers
 } from 'lucide-react';
 import Link from 'next/link';
 
@@ -44,6 +48,7 @@ export default function Home() {
             <a href="#problem" className="hover:text-blue-600 transition-colors">The Problem</a>
             <a href="#what-we-do" className="hover:text-blue-600 transition-colors">What We Do</a>
             <a href="#featured-work" className="hover:text-blue-600 transition-colors">Case Studies</a>
+            <a href="#ai-tools" className="hover:text-blue-600 transition-colors">AI Tools</a>
             <a href="#research" className="hover:text-blue-600 transition-colors">Research</a>
             <a href="#about" className="hover:text-blue-600 transition-colors">About</a>
           </div>
@@ -242,6 +247,97 @@ export default function Home() {
                 </div>
                 <h3 className="text-lg font-semibold text-slate-300 mb-3">More Case Studies Soon</h3>
                 <p className="text-sm text-slate-500 max-w-[250px]">We are currently documenting more of our recent operational transformations.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* AI Tool Samples Section */}
+        <section id="ai-tools" className="py-24 bg-white relative">
+          <div className="max-w-6xl mx-auto px-6">
+            <div className="max-w-3xl mb-16">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-blue-600 text-sm font-medium mb-6 border border-blue-100">
+                <Sparkles className="w-3.5 h-3.5" />
+                AI Tool Samples
+              </div>
+              <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-slate-900 mb-6">
+                Interactive demos, not just slideware.
+              </h2>
+              <p className="text-lg text-slate-600">
+                A growing collection of sample AI tools you can try directly in the browser, showing the kind of automation we build into real operational workflows.
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {/* AI Tool Card 1 */}
+              <Link href="/demos/email-triage" className="group block h-full">
+                <div className="bg-slate-50 border border-slate-200 rounded-3xl overflow-hidden hover:border-blue-300 hover:bg-blue-50/30 transition-all h-full flex flex-col shadow-sm hover:shadow-md">
+                  <div className="h-48 bg-slate-900 relative overflow-hidden border-b border-slate-800 p-6 flex items-center justify-center">
+                    <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '16px 16px' }}></div>
+                    <div className="flex gap-4 relative z-10 opacity-90 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500">
+                      <div className="w-14 h-14 bg-blue-500/10 rounded-2xl flex items-center justify-center border border-blue-500/30 shadow-[0_0_15px_rgba(59,130,246,0.1)]">
+                        <Inbox className="w-7 h-7 text-blue-400" />
+                      </div>
+                      <div className="w-14 h-14 bg-emerald-500/10 rounded-2xl flex items-center justify-center border border-emerald-500/30 -ml-4 mt-6 shadow-[0_0_15px_rgba(16,185,129,0.1)]">
+                        <Sparkles className="w-7 h-7 text-emerald-400" />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="p-8 flex flex-col grow">
+                    <div className="flex items-center gap-2 mb-4">
+                      <span className="px-3 py-1 bg-white rounded-full text-xs font-medium text-slate-600 border border-slate-200">Sales & Support</span>
+                    </div>
+                    <h3 className="text-xl font-bold text-slate-900 mb-3 group-hover:text-blue-600 transition-colors">
+                      AI Email / Lead Triage
+                    </h3>
+                    <p className="text-sm text-slate-600 mb-8 line-clamp-3 leading-relaxed">
+                      Drop in an inbox of raw emails and watch the AI classify intent, score priority, and draft a suggested first reply in seconds.
+                    </p>
+                    <div className="mt-auto flex items-center text-sm font-semibold text-blue-600 group-hover:text-blue-700 transition-colors">
+                      Try the Demo <ArrowUpRight className="w-4 h-4 ml-1.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                    </div>
+                  </div>
+                </div>
+              </Link>
+
+              {/* AI Tool Card 2 */}
+              <Link href="/demos/document-qa" className="group block h-full">
+                <div className="bg-slate-50 border border-slate-200 rounded-3xl overflow-hidden hover:border-indigo-300 hover:bg-indigo-50/30 transition-all h-full flex flex-col shadow-sm hover:shadow-md">
+                  <div className="h-48 bg-slate-900 relative overflow-hidden border-b border-slate-800 p-6 flex items-center justify-center">
+                    <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '16px 16px' }}></div>
+                    <div className="flex gap-4 relative z-10 opacity-90 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500">
+                      <div className="w-14 h-14 bg-indigo-500/10 rounded-2xl flex items-center justify-center border border-indigo-500/30 shadow-[0_0_15px_rgba(99,102,241,0.1)]">
+                        <Layers className="w-7 h-7 text-indigo-400" />
+                      </div>
+                      <div className="w-14 h-14 bg-blue-500/10 rounded-2xl flex items-center justify-center border border-blue-500/30 -ml-4 mt-6 shadow-[0_0_15px_rgba(59,130,246,0.1)]">
+                        <Search className="w-7 h-7 text-blue-400" />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="p-8 flex flex-col grow">
+                    <div className="flex items-center gap-2 mb-4">
+                      <span className="px-3 py-1 bg-white rounded-full text-xs font-medium text-slate-600 border border-slate-200">Knowledge & Search</span>
+                    </div>
+                    <h3 className="text-xl font-bold text-slate-900 mb-3 group-hover:text-indigo-600 transition-colors">
+                      Document Q&amp;A
+                    </h3>
+                    <p className="text-sm text-slate-600 mb-8 line-clamp-3 leading-relaxed">
+                      Pick a document and ask it a question — watch retrieval-augmented generation (RAG) run step by step, from chunking to a grounded AI answer.
+                    </p>
+                    <div className="mt-auto flex items-center text-sm font-semibold text-indigo-600 group-hover:text-indigo-700 transition-colors">
+                      Try the Demo <ArrowUpRight className="w-4 h-4 ml-1.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                    </div>
+                  </div>
+                </div>
+              </Link>
+
+              {/* Placeholder for future tool demos */}
+              <div className="border border-dashed border-slate-300 rounded-3xl flex flex-col items-center justify-center p-8 text-center bg-slate-50/50 h-full min-h-[400px]">
+                <div className="w-14 h-14 bg-white border border-slate-200 rounded-full flex items-center justify-center mb-5">
+                  <span className="text-slate-400 text-xl font-light">+</span>
+                </div>
+                <h3 className="text-lg font-semibold text-slate-600 mb-3">More Tools Coming Soon</h3>
+                <p className="text-sm text-slate-500 max-w-[250px]">More sample AI tools are on the way, covering other everyday operational bottlenecks.</p>
               </div>
             </div>
           </div>
