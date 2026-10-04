@@ -95,6 +95,34 @@ async function callOpenAI(apiKey: string, system: string, user: string) {
   return text as string;
 }
 
+async function callDeepSeek(apiKey: string, system: string, user: string) {
+  const res = await fetch('https://api.deepseek.com/chat/completions', {
+    method: 'POST',
+    headers: {
+      'content-type': 'application/json',
+      authorization: `Bearer ${apiKey}`,
+    },
+    body: JSON.stringify({
+      model: 'deepseek-chat',
+      max_tokens: 400,
+      messages: [
+        { role: 'system', content: system },
+        { role: 'user', content: user },
+      ],
+    }),
+  });
+
+  if (!res.ok) {
+    const errText = await res.text();
+    throw new Error(`DeepSeek API error (${res.status}): ${errText}`);
+  }
+
+  const data = await res.json();
+  const text = data?.choices?.[0]?.message?.content;
+  if (!text) throw new Error('DeepSeek API returned an unexpected response shape.');
+  return text as string;
+}
+
 export async function POST(req: NextRequest) {
   const ip = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ?? 'unknown';
   if (isRateLimited(ip)) {
@@ -138,13 +166,14 @@ export async function POST(req: NextRequest) {
 
   const anthropicKey = process.env.ANTHROPIC_API_KEY;
   const openaiKey = process.env.OPENAI_API_KEY;
+  const deepseekKey = process.env.DEEPSEEK_API_KEY;
 
-  if (!anthropicKey && !openaiKey) {
+  if (!anthropicKey && !openaiKey && !deepseekKey) {
     return NextResponse.json(
       {
         error: 'not_configured',
         message:
-          'No AI API key is configured on the server yet. Set ANTHROPIC_API_KEY or OPENAI_API_KEY in the environment to enable live answers.',
+          'No AI API key is configured on the server yet. Set ANTHROPIC_API_KEY, OPENAI_API_KEY, or DEEPSEEK_API_KEY in the environment to enable live answers.',
       },
       { status: 503 }
     );
@@ -153,10 +182,12 @@ export async function POST(req: NextRequest) {
   const { system, user } = buildPrompt(question, context);
 
   try {
-    const provider = anthropicKey ? 'anthropic' : 'openai';
+    const provider = anthropicKey ? 'anthropic' : openaiKey ? 'openai' : 'deepseek';
     const answer = anthropicKey
       ? await callAnthropic(anthropicKey, system, user)
-      : await callOpenAI(openaiKey as string, system, user);
+      : openaiKey
+      ? await callOpenAI(openaiKey, system, user)
+      : await callDeepSeek(deepseekKey as string, system, user);
 
     return NextResponse.json({ answer, provider });
   } catch (err) {
