@@ -359,7 +359,7 @@ export default function Home() {
           <div aria-hidden className="absolute left-1/2 top-0 -z-10 h-[500px] w-[1000px] -translate-x-1/2 rounded-full bg-blue-600/10 blur-[120px]" />
           <div className="mx-auto max-w-6xl px-6">
             <div className="reveal mb-16 max-w-3xl">
-              <Eyebrow index="02">What We Do</Eyebrow>
+              <Eyebrow index="02">Services</Eyebrow>
               <h2 className="mb-6 text-3xl font-semibold tracking-tight text-white md:text-5xl">
                 What We Do
               </h2>
@@ -449,7 +449,7 @@ export default function Home() {
 
         {/* AI Tool Samples Section */}
         <section id="ai-tools" className="relative isolate overflow-hidden py-24 md:py-32">
-          <div aria-hidden className="absolute left-0 top-1/3 -z-10 h-[600px] w-[600px] -translate-x-1/2 rounded-full bg-violet-600/10 blur-[120px]" />
+          <div aria-hidden className="absolute left-0 top-0 -z-10 h-[500px] w-[500px] -translate-x-1/2 rounded-full bg-violet-600/10 blur-[120px]" />
           <div className="mx-auto max-w-6xl px-6">
             <div className="reveal mb-16 max-w-3xl">
               <Eyebrow index="04">
@@ -538,7 +538,7 @@ export default function Home() {
         </section>
 
         {/* About Section */}
-        <section id="about" className="py-24 md:py-32">
+        <section id="about" className="overflow-hidden py-24 md:py-32">
           <div className="mx-auto max-w-6xl px-6">
             <div className="grid items-center gap-16 md:grid-cols-2">
               <div className="reveal relative order-2 md:order-1">
@@ -565,7 +565,7 @@ export default function Home() {
                 </div>
               </div>
               <div className="reveal order-1 md:order-2">
-                <Eyebrow index="06">About</Eyebrow>
+                <Eyebrow index="06">The Founder</Eyebrow>
                 <h2 className="mb-6 text-3xl font-semibold tracking-tight text-white md:text-5xl">
                   About
                 </h2>
