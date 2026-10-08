@@ -13,136 +13,357 @@ import {
   AlertCircle,
   Users,
   Building2,
-  CreditCard,
-  PieChart,
-  Wrench,
-  FileText,
-  MessageSquare,
   BarChart3,
-  TrendingDown,
   Zap,
-  CheckCircle,
-  TrendingUp,
   ArrowUpRight,
   Sparkles,
   Inbox,
   Search,
-  Layers
+  Layers,
+  Plus
 } from 'lucide-react';
 import Link from 'next/link';
 
+const navLinks = [
+  { href: '#problem', label: 'The Problem' },
+  { href: '#what-we-do', label: 'What We Do' },
+  { href: '#featured-work', label: 'Case Studies' },
+  { href: '#ai-tools', label: 'AI Tools' },
+  { href: '#research', label: 'Research' },
+  { href: '#about', label: 'About' }
+];
+
+const capabilities = [
+  'Workflow Automation',
+  'AI-Assisted Operations',
+  'Document Intelligence',
+  'Systems Integration',
+  'Internal Tools',
+  'Reporting Automation',
+  'Process Optimization',
+  'Retrieval-Augmented Generation'
+];
+
+const pipeline = [
+  { icon: Inbox, label: 'Request received', detail: 'Email · Portal · Spreadsheet', running: false },
+  { icon: Sparkles, label: 'AI classifies & prioritizes', detail: 'Maintenance · High priority', running: false },
+  { icon: Network, label: 'Routed for approval', detail: 'Assigned to vendor', running: false },
+  { icon: BarChart3, label: 'Reporting updated', detail: 'Dashboard synced', running: true }
+];
+
+const linkedInPath = "M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z";
+
+function Eyebrow({ index, children, className = '' }: { index: string; children: React.ReactNode; className?: string }) {
+  return (
+    <div className={`mb-6 flex items-center gap-3 font-mono text-xs uppercase tracking-[0.2em] text-slate-500 ${className}`}>
+      <span className="text-blue-400">{index}</span>
+      <span className="h-px w-8 bg-gradient-to-r from-blue-400/60 to-transparent" />
+      {children}
+    </div>
+  );
+}
+
+function Hairline() {
+  return <div className="mx-auto h-px max-w-6xl bg-gradient-to-r from-transparent via-white/10 to-transparent" />;
+}
+
+const accents = {
+  blue: { glow: 'bg-blue-500/30', dot: 'bg-blue-400 text-blue-400', text: 'text-blue-300 group-hover:text-blue-200' },
+  indigo: { glow: 'bg-indigo-500/30', dot: 'bg-indigo-400 text-indigo-400', text: 'text-indigo-300 group-hover:text-indigo-200' },
+  emerald: { glow: 'bg-emerald-500/25', dot: 'bg-emerald-400 text-emerald-400', text: 'text-emerald-300 group-hover:text-emerald-200' }
+};
+
+function ShowcaseCard({
+  href,
+  tag,
+  title,
+  description,
+  cta,
+  accent,
+  icons
+}: {
+  href: string;
+  tag: string;
+  title: React.ReactNode;
+  description: string;
+  cta: string;
+  accent: keyof typeof accents;
+  icons: { icon: React.ElementType; className: string }[];
+}) {
+  const a = accents[accent];
+  return (
+    <Link
+      href={href}
+      className="group ring-gradient flex h-full flex-col overflow-hidden rounded-3xl bg-white/[0.02] transition-all duration-500 hover:-translate-y-1 hover:bg-white/[0.04] hover:shadow-2xl hover:shadow-indigo-950/50"
+    >
+      <div className="relative h-52 overflow-hidden border-b border-white/5 bg-[#070a12]">
+        <div className="bg-dots absolute inset-0 opacity-60 [mask-image:radial-gradient(ellipse_at_center,#000,transparent_75%)]" />
+        <div className={`absolute left-1/2 top-1/2 h-40 w-40 -translate-x-1/2 -translate-y-1/2 rounded-full opacity-60 blur-3xl transition-opacity duration-700 group-hover:opacity-100 ${a.glow}`} />
+        <div className="absolute left-1/2 top-1/2 h-36 w-36 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/[0.06]" />
+        <div className="absolute left-1/2 top-1/2 h-64 w-64 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/[0.05] motion-safe:animate-orbit">
+          <span className={`absolute -top-1 left-1/2 h-2 w-2 -translate-x-1/2 rounded-full shadow-[0_0_12px_currentColor] ${a.dot}`} />
+        </div>
+        <div className="relative flex h-full items-center justify-center transition-transform duration-700 group-hover:scale-105">
+          {icons.map(({ icon: Icon, className }, i) => (
+            <div
+              key={i}
+              className={`flex h-14 w-14 items-center justify-center rounded-2xl border backdrop-blur-md ${i > 0 ? '-ml-3' : ''} ${i % 2 ? 'mt-10' : ''} ${className}`}
+            >
+              <Icon className="h-6 w-6" />
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className="flex grow flex-col p-7">
+        <span className="mb-4 w-fit rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 font-mono text-[11px] uppercase tracking-wider text-slate-400">
+          {tag}
+        </span>
+        <h3 className="mb-3 text-xl font-semibold tracking-tight text-white">{title}</h3>
+        <p className="mb-8 line-clamp-3 text-sm leading-relaxed text-slate-400">{description}</p>
+        <div className={`mt-auto flex items-center text-sm font-medium transition-colors ${a.text}`}>
+          {cta}
+          <ArrowUpRight className="ml-1.5 h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+        </div>
+      </div>
+    </Link>
+  );
+}
+
+function PlaceholderCard({ title, text }: { title: string; text: string }) {
+  return (
+    <div className="flex h-full min-h-[420px] flex-col items-center justify-center rounded-3xl border border-dashed border-white/10 bg-white/[0.01] p-8 text-center">
+      <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-white/[0.03]">
+        <Plus className="h-5 w-5 text-slate-500" />
+      </div>
+      <h3 className="mb-2 text-base font-medium text-slate-300">{title}</h3>
+      <p className="max-w-[250px] text-sm text-slate-500">{text}</p>
+    </div>
+  );
+}
+
 export default function Home() {
   return (
-    <div className="min-h-screen bg-[#F8FAFC] text-slate-900 font-sans selection:bg-blue-100 selection:text-blue-900">
+    <div className="min-h-screen bg-[#05070d] font-sans text-slate-300 selection:bg-indigo-500/30 selection:text-white">
 
       {/* Navigation */}
-      <nav className="fixed w-full z-50 top-0 transition-all duration-300 bg-white/80 backdrop-blur-md border-b border-slate-200/50">
-        <div className="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
-          <div className="font-bold text-xl tracking-tight text-slate-900 flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center">
-              <Workflow className="w-5 h-5 text-white" />
+      <header className="fixed inset-x-0 top-4 z-50 px-4">
+        <nav className="glass mx-auto flex h-14 max-w-6xl items-center justify-between rounded-full border border-white/10 pl-5 pr-2 shadow-lg shadow-black/30">
+          <a href="#" className="flex items-center gap-2.5 font-semibold tracking-tight text-white">
+            <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-violet-600 shadow-[0_0_20px_-4px_rgba(99,102,241,0.8)]">
+              <Workflow className="h-4 w-4 text-white" />
             </div>
             Workflow Labs
-          </div>
-          <div className="hidden md:flex gap-8 text-sm font-medium text-slate-600">
-            <a href="#problem" className="hover:text-blue-600 transition-colors">The Problem</a>
-            <a href="#what-we-do" className="hover:text-blue-600 transition-colors">What We Do</a>
-            <a href="#featured-work" className="hover:text-blue-600 transition-colors">Case Studies</a>
-            <a href="#ai-tools" className="hover:text-blue-600 transition-colors">AI Tools</a>
-            <a href="#research" className="hover:text-blue-600 transition-colors">Research</a>
-            <a href="#about" className="hover:text-blue-600 transition-colors">About</a>
-          </div>
-          <a href="#contact" className="hidden md:inline-flex items-center justify-center px-5 py-2.5 text-sm font-medium text-white bg-slate-900 rounded-full hover:bg-slate-800 transition-all active:scale-95 shadow-sm hover:shadow-md">
-            Let's Connect
           </a>
-        </div>
-      </nav>
+          <div className="hidden gap-7 text-sm text-slate-400 md:flex">
+            {navLinks.map((link) => (
+              <a key={link.href} href={link.href} className="transition-colors hover:text-white">
+                {link.label}
+              </a>
+            ))}
+          </div>
+          <a href="#contact" className="inline-flex items-center justify-center rounded-full bg-white px-4 py-2 text-sm font-medium text-slate-950 transition-all hover:bg-slate-200 active:scale-95">
+            Let&apos;s Connect
+          </a>
+        </nav>
+      </header>
 
-      <main className="pt-20">
+      <main>
 
         {/* Hero Section */}
-        <section className="relative pt-32 pb-20 md:pt-48 md:pb-32 overflow-hidden">
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-blue-100/50 via-slate-50/20 to-transparent -z-10"></div>
+        <section className="relative isolate overflow-hidden pb-24 pt-36 md:pb-32 md:pt-44">
+          <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
+            <div className="bg-grid absolute inset-0" />
+            <div className="absolute -top-48 left-1/2 h-[600px] w-[1000px] -translate-x-1/2 rounded-full bg-blue-600/20 blur-[120px] motion-safe:animate-aurora" />
+            <div className="absolute right-[-10%] top-24 h-[420px] w-[520px] rounded-full bg-violet-600/20 blur-[120px] motion-safe:animate-aurora [animation-delay:-7s]" />
+            <div className="absolute left-[-12%] top-72 h-[320px] w-[420px] rounded-full bg-cyan-500/10 blur-[100px] motion-safe:animate-aurora [animation-delay:-12s]" />
+            <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-indigo-400/40 to-transparent" />
+          </div>
 
-          <div className="max-w-6xl mx-auto px-6">
-            <div className="max-w-3xl">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-blue-600 text-sm font-medium mb-8 border border-blue-100 shadow-sm">
+          <div className="mx-auto grid max-w-6xl items-center gap-16 px-6 lg:grid-cols-[1.1fr_0.9fr]">
+            <div>
+              <div className="glass mb-8 inline-flex items-center gap-2.5 rounded-full border border-white/10 px-3.5 py-1.5 text-sm text-slate-300 motion-safe:animate-fade-up">
                 <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-cyan-400 opacity-75"></span>
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-cyan-400"></span>
                 </span>
                 Researching modern workflows
               </div>
-              <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight text-slate-900 mb-8 leading-[1.1]">
-                Helping operational teams reduce manual coordination through <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">automation and AI.</span>
+              <h1
+                className="mb-8 text-4xl font-semibold leading-[1.05] tracking-tight text-white sm:text-5xl lg:text-6xl xl:text-[4.25rem] motion-safe:animate-fade-up"
+                style={{ animationDelay: '100ms' }}
+              >
+                Helping operational teams reduce manual coordination through{' '}
+                <span className="text-gradient font-serif font-normal italic">automation and AI.</span>
               </h1>
-              <p className="text-xl text-slate-600 mb-10 leading-relaxed max-w-2xl">
+              <p
+                className="mb-10 max-w-xl text-lg leading-relaxed text-slate-400 md:text-xl motion-safe:animate-fade-up"
+                style={{ animationDelay: '200ms' }}
+              >
                 We research, design, and implement solutions that simplify complex operational workflows.
               </p>
 
-              <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
-                <a href="#contact" className="inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-white bg-blue-600 rounded-full hover:bg-blue-700 transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0 active:scale-95 group">
-                  Let's Connect
-                  <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-center motion-safe:animate-fade-up" style={{ animationDelay: '300ms' }}>
+                <a href="#contact" className="group inline-flex items-center justify-center rounded-full bg-white px-7 py-3.5 text-sm font-semibold text-slate-950 shadow-[0_0_40px_-8px_rgba(129,140,248,0.7)] transition-all hover:shadow-[0_0_60px_-6px_rgba(129,140,248,0.9)] active:scale-95">
+                  Let&apos;s Connect
+                  <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </a>
+                <a href="#featured-work" className="inline-flex items-center justify-center rounded-full border border-white/10 bg-white/[0.03] px-7 py-3.5 text-sm font-semibold text-slate-200 transition-colors hover:bg-white/[0.07]">
+                  View our work
                 </a>
               </div>
+            </div>
 
+            {/* Hero visual: an example automated workflow */}
+            <div className="relative motion-safe:animate-fade-up" style={{ animationDelay: '250ms' }}>
+              <div aria-hidden className="absolute -inset-10 rounded-full bg-[radial-gradient(closest-side,rgba(99,102,241,0.25),transparent)] blur-2xl" />
+
+              <div className="glass ring-gradient relative rounded-3xl p-5 shadow-2xl shadow-black/60 sm:p-6">
+                <div className="mb-5 flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="flex gap-1.5">
+                      <span className="h-2.5 w-2.5 rounded-full bg-white/10" />
+                      <span className="h-2.5 w-2.5 rounded-full bg-white/10" />
+                      <span className="h-2.5 w-2.5 rounded-full bg-white/10" />
+                    </div>
+                    <span className="font-mono text-xs text-slate-500">example-workflow.run</span>
+                  </div>
+                  <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-400/20 bg-emerald-400/10 px-2.5 py-1 font-mono text-[10px] uppercase tracking-wider text-emerald-300">
+                    <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-400" />
+                    Live
+                  </span>
+                </div>
+
+                <ol className="relative space-y-3">
+                  <div aria-hidden className="absolute bottom-8 left-8 top-8 w-px overflow-hidden bg-white/10">
+                    <div className="absolute inset-x-0 h-1/3 bg-gradient-to-b from-transparent via-cyan-300 to-transparent motion-safe:animate-travel" />
+                  </div>
+                  {pipeline.map((step, i) => (
+                    <li
+                      key={step.label}
+                      className="relative flex items-center gap-4 rounded-2xl border border-white/5 bg-white/[0.02] p-3 pr-4 motion-safe:animate-fade-up"
+                      style={{ animationDelay: `${450 + i * 150}ms` }}
+                    >
+                      <div className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-[#0b0f1a]">
+                        <step.icon className="h-[18px] w-[18px] text-blue-300" />
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <p className="truncate text-sm font-medium text-slate-100">{step.label}</p>
+                        <p className="truncate font-mono text-[11px] text-slate-500">{step.detail}</p>
+                      </div>
+                      {step.running ? (
+                        <span className="inline-flex shrink-0 items-center gap-1.5 font-mono text-[10px] uppercase tracking-wider text-cyan-300">
+                          <span className="h-1.5 w-1.5 animate-ping rounded-full bg-cyan-300" />
+                          Running
+                        </span>
+                      ) : (
+                        <CheckCircle2 className="h-4 w-4 shrink-0 text-emerald-400" />
+                      )}
+                    </li>
+                  ))}
+                </ol>
+
+                <div className="mt-5 flex items-center justify-between border-t border-white/5 pt-4 font-mono text-[11px] text-slate-500">
+                  <span>trigger: new_request</span>
+                  <span className="text-slate-400">human-in-the-loop ✓</span>
+                </div>
+              </div>
+
+              <div className="glass absolute -right-4 -top-5 hidden items-center gap-2 rounded-2xl border border-white/10 px-3.5 py-2.5 text-xs text-slate-200 shadow-xl shadow-black/40 motion-safe:animate-float sm:flex">
+                <Bot className="h-4 w-4 text-violet-300" />
+                AI-assisted
+              </div>
+              <div className="glass absolute -bottom-5 -left-4 hidden items-center gap-2 rounded-2xl border border-white/10 px-3.5 py-2.5 text-xs text-slate-200 shadow-xl shadow-black/40 motion-safe:animate-float [animation-delay:-3.5s] sm:flex">
+                <Users className="h-4 w-4 text-cyan-300" />
+                Built around your team
+              </div>
             </div>
           </div>
         </section>
 
+        {/* Capabilities marquee */}
+        <div className="relative overflow-hidden border-y border-white/5 bg-white/[0.01] py-5 [mask-image:linear-gradient(to_right,transparent,#000_15%,#000_85%,transparent)]">
+          <div className="flex w-max motion-safe:animate-marquee">
+            {[...capabilities, ...capabilities].map((item, i) => (
+              <span
+                key={i}
+                aria-hidden={i >= capabilities.length}
+                className="flex items-center gap-3 whitespace-nowrap px-7 font-mono text-xs uppercase tracking-[0.2em] text-slate-500"
+              >
+                <span className="h-1 w-1 rounded-full bg-indigo-400/70" />
+                {item}
+              </span>
+            ))}
+          </div>
+        </div>
+
         {/* The Problem Section */}
-        <section id="problem" className="py-24 bg-white relative">
-          <div className="max-w-6xl mx-auto px-6">
-            <div className="grid md:grid-cols-2 gap-16 items-center">
-              <div>
-                <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-900 mb-6">
-                  Operations shouldn't depend on spreadsheets, emails, and endless follow-ups.
+        <section id="problem" className="relative py-24 md:py-32">
+          <div className="mx-auto max-w-6xl px-6">
+            <div className="grid items-center gap-16 md:grid-cols-2">
+              <div className="reveal">
+                <Eyebrow index="01">The Problem</Eyebrow>
+                <h2 className="mb-6 text-3xl font-semibold tracking-tight text-white md:text-5xl md:leading-[1.1]">
+                  Operations shouldn&apos;t depend on spreadsheets, emails, and{' '}
+                  <span className="font-serif font-normal italic text-slate-400">endless follow-ups.</span>
                 </h2>
-                <p className="text-lg text-slate-600 mb-6">
+                <p className="mb-6 text-lg leading-relaxed text-slate-400">
                   Many businesses still rely on disconnected tools and manual processes to coordinate day-to-day operations.
                 </p>
-                <p className="text-lg text-slate-600 font-medium mb-8">
+                <p className="text-lg leading-relaxed text-slate-200">
                   These inefficiencies consume time, create bottlenecks, and increase the risk of human error.
                 </p>
               </div>
 
-              <div className="bg-slate-50 rounded-3xl p-8 border border-slate-100 shadow-sm relative overflow-hidden group hover:shadow-md transition-shadow">
-                <div className="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 bg-red-100 rounded-full blur-2xl opacity-50 group-hover:opacity-70 transition-opacity"></div>
-                <h3 className="text-lg font-semibold text-slate-900 mb-6 flex items-center gap-2">
-                  <AlertCircle className="w-5 h-5 text-red-500" />
-                  Common challenges include:
-                </h3>
-                <ul className="space-y-4">
-                  {[
-                    "Tracking requests across multiple channels",
-                    "Coordinating between teams, vendors, and clients",
-                    "Managing approvals and follow-ups",
-                    "Producing reports manually",
-                    "Maintaining visibility across operational workflows"
-                  ].map((challenge, i) => (
-                    <li key={i} className="flex items-start gap-3">
-                      <div className="w-6 h-6 rounded-full bg-white border border-slate-200 flex items-center justify-center shrink-0 mt-0.5 shadow-sm">
-                        <span className="w-2 h-2 rounded-full bg-slate-300"></span>
-                      </div>
-                      <span className="text-slate-700">{challenge}</span>
-                    </li>
-                  ))}
-                </ul>
+              <div className="reveal ring-gradient relative overflow-hidden rounded-3xl bg-white/[0.02]">
+                <div aria-hidden className="absolute -right-16 -top-16 h-48 w-48 rounded-full bg-amber-500/10 blur-3xl" />
+                <div className="flex items-center justify-between border-b border-white/5 px-6 py-4">
+                  <div className="flex gap-1.5">
+                    <span className="h-2.5 w-2.5 rounded-full bg-white/10" />
+                    <span className="h-2.5 w-2.5 rounded-full bg-white/10" />
+                    <span className="h-2.5 w-2.5 rounded-full bg-white/10" />
+                  </div>
+                  <span className="font-mono text-[11px] text-slate-500">ops-audit.log</span>
+                </div>
+                <div className="relative p-6 md:p-8">
+                  <h3 className="mb-4 flex items-center gap-2 text-sm font-medium text-slate-300">
+                    <AlertCircle className="h-4 w-4 text-amber-400" />
+                    Common challenges include:
+                  </h3>
+                  <ul className="divide-y divide-white/5">
+                    {[
+                      "Tracking requests across multiple channels",
+                      "Coordinating between teams, vendors, and clients",
+                      "Managing approvals and follow-ups",
+                      "Producing reports manually",
+                      "Maintaining visibility across operational workflows"
+                    ].map((challenge, i) => (
+                      <li key={i} className="flex items-center gap-4 py-4">
+                        <span className="font-mono text-xs text-slate-600">0{i + 1}</span>
+                        <span className="flex-1 text-slate-300">{challenge}</span>
+                        <span className="hidden rounded-full border border-amber-400/20 bg-amber-400/5 px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-amber-300/80 sm:inline">
+                          Friction
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
         </section>
 
+        <Hairline />
+
         {/* What We Do Section */}
-        <section id="what-we-do" className="py-24 bg-slate-900 text-white relative overflow-hidden">
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[500px] bg-blue-600/20 rounded-full blur-[120px] -z-10"></div>
-          <div className="max-w-6xl mx-auto px-6">
-            <div className="max-w-3xl mb-16">
-              <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-6">
+        <section id="what-we-do" className="relative isolate overflow-hidden py-24 md:py-32">
+          <div aria-hidden className="absolute left-1/2 top-0 -z-10 h-[500px] w-[1000px] -translate-x-1/2 rounded-full bg-blue-600/10 blur-[120px]" />
+          <div className="mx-auto max-w-6xl px-6">
+            <div className="reveal mb-16 max-w-3xl">
+              <Eyebrow index="02">What We Do</Eyebrow>
+              <h2 className="mb-6 text-3xl font-semibold tracking-tight text-white md:text-5xl">
                 What We Do
               </h2>
-              <p className="text-xl text-slate-300 mb-6">
+              <p className="mb-6 text-xl text-slate-300">
                 We help businesses identify and automate operational bottlenecks.
               </p>
               <p className="text-lg text-slate-400">
@@ -150,7 +371,7 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+            <div className="reveal mb-16 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {[
                 { icon: Workflow, title: "Workflow Automation" },
                 { icon: Settings, title: "Process Optimization" },
@@ -159,201 +380,156 @@ export default function Home() {
                 { icon: BarChart, title: "Reporting Automation" },
                 { icon: Network, title: "Systems Integration" }
               ].map((feature, i) => (
-                <div key={i} className="bg-slate-800/50 backdrop-blur-sm border border-slate-700 rounded-2xl p-6 hover:bg-slate-800 transition-colors group">
-                  <div className="w-12 h-12 bg-blue-500/10 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-blue-500/20 transition-all">
-                    <feature.icon className="w-6 h-6 text-blue-400" />
+                <div
+                  key={i}
+                  className="group ring-gradient relative overflow-hidden rounded-2xl bg-white/[0.02] p-6 transition-all duration-500 hover:-translate-y-1 hover:bg-white/[0.04]"
+                >
+                  <div aria-hidden className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-blue-400/70 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                  <div aria-hidden className="absolute -top-24 left-1/2 h-48 w-48 -translate-x-1/2 rounded-full bg-blue-500/20 opacity-0 blur-3xl transition-opacity duration-700 group-hover:opacity-100" />
+                  <div className="relative mb-10 flex items-start justify-between">
+                    <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-white/10 bg-gradient-to-b from-white/10 to-white/[0.02]">
+                      <feature.icon className="h-5 w-5 text-blue-300" />
+                    </div>
+                    <span className="font-mono text-xs text-slate-600">/0{i + 1}</span>
                   </div>
-                  <h3 className="text-lg font-semibold text-white">{feature.title}</h3>
+                  <h3 className="relative text-lg font-medium text-white">{feature.title}</h3>
                 </div>
               ))}
             </div>
 
-            <div className="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-3xl p-8 md:p-12 text-center max-w-4xl mx-auto shadow-2xl relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -mr-20 -mt-20"></div>
-              <p className="text-xl md:text-2xl font-medium text-white relative z-10">
-                Rather than forcing businesses into generic software, we explore solutions tailored to the way teams actually operate.
-              </p>
-            </div>
+            <figure className="reveal ring-gradient relative mx-auto max-w-4xl overflow-hidden rounded-3xl bg-gradient-to-br from-blue-600/15 via-indigo-600/10 to-violet-600/15 px-8 py-12 text-center md:px-16 md:py-16">
+              <div aria-hidden className="bg-dots absolute inset-0 opacity-50 [mask-image:radial-gradient(ellipse_at_center,#000,transparent_70%)]" />
+              <blockquote className="relative font-serif text-2xl leading-snug text-white md:text-4xl">
+                Rather than forcing businesses into generic software, we explore solutions{' '}
+                <span className="text-gradient italic">tailored to the way teams actually operate.</span>
+              </blockquote>
+            </figure>
           </div>
         </section>
 
+        <Hairline />
+
         {/* Featured Work / Case Studies Section */}
-        <section id="featured-work" className="py-24 bg-slate-950 text-white relative overflow-hidden">
-          <div className="absolute top-1/2 right-0 w-[800px] h-[800px] bg-indigo-600/10 rounded-full blur-[100px] -z-10 translate-x-1/2 -translate-y-1/2"></div>
-          
-          <div className="max-w-6xl mx-auto px-6">
-            <div className="max-w-3xl mb-16">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 text-blue-400 text-sm font-medium mb-6 border border-blue-500/20">
-                Featured Work
-              </div>
-              <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-6">
+        <section id="featured-work" className="relative isolate overflow-hidden py-24 md:py-32">
+          <div aria-hidden className="absolute right-0 top-1/2 -z-10 h-[700px] w-[700px] -translate-y-1/2 translate-x-1/2 rounded-full bg-indigo-600/10 blur-[120px]" />
+          <div className="mx-auto max-w-6xl px-6">
+            <div className="reveal mb-16 max-w-3xl">
+              <Eyebrow index="03">Featured Work</Eyebrow>
+              <h2 className="mb-6 text-3xl font-semibold tracking-tight text-white md:text-5xl">
                 Case Studies
               </h2>
               <p className="text-lg text-slate-400">
-                Real-world examples of how we've helped businesses streamline operations through custom automation and tailored software solutions.
+                Real-world examples of how we&apos;ve helped businesses streamline operations through custom automation and tailored software solutions.
               </p>
             </div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {/* Case Study Card 1 */}
-              <Link href="/case-studies/property-management-system" className="group block h-full">
-                <div className="bg-slate-900/50 backdrop-blur-sm border border-slate-800 rounded-3xl overflow-hidden hover:border-slate-700 hover:bg-slate-800/50 transition-all h-full flex flex-col">
-                  {/* Abstract thumbnail replacing the full architecture diagram */}
-                  <div className="h-48 bg-slate-900 relative overflow-hidden border-b border-slate-800 p-6 flex items-center justify-center">
-                    <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '16px 16px' }}></div>
-                    <div className="flex gap-4 relative z-10 opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500">
-                       <div className="w-14 h-14 bg-blue-500/10 rounded-2xl flex items-center justify-center border border-blue-500/30 shadow-[0_0_15px_rgba(59,130,246,0.1)]">
-                         <Building2 className="w-7 h-7 text-blue-400" />
-                       </div>
-                       <div className="w-14 h-14 bg-purple-500/10 rounded-2xl flex items-center justify-center border border-purple-500/30 -ml-4 mt-6 shadow-[0_0_15px_rgba(168,85,247,0.1)]">
-                         <Settings className="w-7 h-7 text-purple-400" />
-                       </div>
-                       <div className="w-14 h-14 bg-emerald-500/10 rounded-2xl flex items-center justify-center border border-emerald-500/30 -ml-4 -mt-2 shadow-[0_0_15px_rgba(16,185,129,0.1)]">
-                         <Zap className="w-7 h-7 text-emerald-400" />
-                       </div>
-                    </div>
-                  </div>
-                  <div className="p-8 flex flex-col grow">
-                    <div className="flex items-center gap-2 mb-4">
-                       <span className="px-3 py-1 bg-slate-800/80 rounded-full text-xs font-medium text-slate-300 border border-slate-700">Property Management</span>
-                    </div>
-                    <h3 className="text-xl font-bold text-white mb-3 group-hover:text-blue-400 transition-colors">
-                      Property Management System
-                    </h3>
-                    <p className="text-sm text-slate-400 mb-8 line-clamp-3 leading-relaxed">
-                      A unified platform that centralized operations, finances, and tenant communications, moving the agency away from spreadsheets and manual tracking.
-                    </p>
-                    <div className="mt-auto flex items-center text-sm font-semibold text-blue-400 group-hover:text-blue-300 transition-colors">
-                      Read Case Study <ArrowUpRight className="w-4 h-4 ml-1.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                    </div>
-                  </div>
-                </div>
-              </Link>
-
-              {/* Placeholder for future case studies */}
-              <div className="border border-dashed border-slate-800 rounded-3xl flex flex-col items-center justify-center p-8 text-center bg-slate-900/20 h-full min-h-[400px]">
-                <div className="w-14 h-14 bg-slate-800/50 rounded-full flex items-center justify-center mb-5">
-                  <span className="text-slate-400 text-xl font-light">+</span>
-                </div>
-                <h3 className="text-lg font-semibold text-slate-300 mb-3">More Case Studies Soon</h3>
-                <p className="text-sm text-slate-500 max-w-[250px]">We are currently documenting more of our recent operational transformations.</p>
-              </div>
+            <div className="reveal grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              <ShowcaseCard
+                href="/case-studies/property-management-system"
+                tag="Property Management"
+                title="Property Management System"
+                description="A unified platform that centralized operations, finances, and tenant communications, moving the agency away from spreadsheets and manual tracking."
+                cta="Read Case Study"
+                accent="blue"
+                icons={[
+                  { icon: Building2, className: 'border-blue-400/30 bg-blue-500/10 text-blue-300' },
+                  { icon: Settings, className: 'border-violet-400/30 bg-violet-500/10 text-violet-300' },
+                  { icon: Zap, className: 'border-emerald-400/30 bg-emerald-500/10 text-emerald-300' }
+                ]}
+              />
+              <PlaceholderCard
+                title="More Case Studies Soon"
+                text="We are currently documenting more of our recent operational transformations."
+              />
             </div>
           </div>
         </section>
 
+        <Hairline />
+
         {/* AI Tool Samples Section */}
-        <section id="ai-tools" className="py-24 bg-white relative">
-          <div className="max-w-6xl mx-auto px-6">
-            <div className="max-w-3xl mb-16">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-blue-600 text-sm font-medium mb-6 border border-blue-100">
-                <Sparkles className="w-3.5 h-3.5" />
+        <section id="ai-tools" className="relative isolate overflow-hidden py-24 md:py-32">
+          <div aria-hidden className="absolute left-0 top-1/3 -z-10 h-[600px] w-[600px] -translate-x-1/2 rounded-full bg-violet-600/10 blur-[120px]" />
+          <div className="mx-auto max-w-6xl px-6">
+            <div className="reveal mb-16 max-w-3xl">
+              <Eyebrow index="04">
+                <Sparkles className="h-3.5 w-3.5 text-violet-300" />
                 AI Tool Samples
-              </div>
-              <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-slate-900 mb-6">
-                Interactive demos, not just slideware.
+              </Eyebrow>
+              <h2 className="mb-6 text-3xl font-semibold tracking-tight text-white md:text-5xl">
+                Interactive demos, <span className="font-serif font-normal italic text-slate-400">not just slideware.</span>
               </h2>
-              <p className="text-lg text-slate-600">
+              <p className="text-lg text-slate-400">
                 A growing collection of sample AI tools you can try directly in the browser, showing the kind of automation we build into real operational workflows.
               </p>
             </div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {/* AI Tool Card 1 */}
-              <Link href="/demos/email-triage" className="group block h-full">
-                <div className="bg-slate-50 border border-slate-200 rounded-3xl overflow-hidden hover:border-blue-300 hover:bg-blue-50/30 transition-all h-full flex flex-col shadow-sm hover:shadow-md">
-                  <div className="h-48 bg-slate-900 relative overflow-hidden border-b border-slate-800 p-6 flex items-center justify-center">
-                    <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '16px 16px' }}></div>
-                    <div className="flex gap-4 relative z-10 opacity-90 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500">
-                      <div className="w-14 h-14 bg-blue-500/10 rounded-2xl flex items-center justify-center border border-blue-500/30 shadow-[0_0_15px_rgba(59,130,246,0.1)]">
-                        <Inbox className="w-7 h-7 text-blue-400" />
-                      </div>
-                      <div className="w-14 h-14 bg-emerald-500/10 rounded-2xl flex items-center justify-center border border-emerald-500/30 -ml-4 mt-6 shadow-[0_0_15px_rgba(16,185,129,0.1)]">
-                        <Sparkles className="w-7 h-7 text-emerald-400" />
-                      </div>
-                    </div>
-                  </div>
-                  <div className="p-8 flex flex-col grow">
-                    <div className="flex items-center gap-2 mb-4">
-                      <span className="px-3 py-1 bg-white rounded-full text-xs font-medium text-slate-600 border border-slate-200">Sales & Support</span>
-                    </div>
-                    <h3 className="text-xl font-bold text-slate-900 mb-3 group-hover:text-blue-600 transition-colors">
-                      AI Email / Lead Triage
-                    </h3>
-                    <p className="text-sm text-slate-600 mb-8 line-clamp-3 leading-relaxed">
-                      Drop in an inbox of raw emails and watch the AI classify intent, score priority, and draft a suggested first reply in seconds.
-                    </p>
-                    <div className="mt-auto flex items-center text-sm font-semibold text-blue-600 group-hover:text-blue-700 transition-colors">
-                      Try the Demo <ArrowUpRight className="w-4 h-4 ml-1.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                    </div>
-                  </div>
-                </div>
-              </Link>
-
-              {/* AI Tool Card 2 */}
-              <Link href="/demos/document-qa" className="group block h-full">
-                <div className="bg-slate-50 border border-slate-200 rounded-3xl overflow-hidden hover:border-indigo-300 hover:bg-indigo-50/30 transition-all h-full flex flex-col shadow-sm hover:shadow-md">
-                  <div className="h-48 bg-slate-900 relative overflow-hidden border-b border-slate-800 p-6 flex items-center justify-center">
-                    <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '16px 16px' }}></div>
-                    <div className="flex gap-4 relative z-10 opacity-90 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500">
-                      <div className="w-14 h-14 bg-indigo-500/10 rounded-2xl flex items-center justify-center border border-indigo-500/30 shadow-[0_0_15px_rgba(99,102,241,0.1)]">
-                        <Layers className="w-7 h-7 text-indigo-400" />
-                      </div>
-                      <div className="w-14 h-14 bg-blue-500/10 rounded-2xl flex items-center justify-center border border-blue-500/30 -ml-4 mt-6 shadow-[0_0_15px_rgba(59,130,246,0.1)]">
-                        <Search className="w-7 h-7 text-blue-400" />
-                      </div>
-                    </div>
-                  </div>
-                  <div className="p-8 flex flex-col grow">
-                    <div className="flex items-center gap-2 mb-4">
-                      <span className="px-3 py-1 bg-white rounded-full text-xs font-medium text-slate-600 border border-slate-200">Knowledge & Search</span>
-                    </div>
-                    <h3 className="text-xl font-bold text-slate-900 mb-3 group-hover:text-indigo-600 transition-colors">
-                      Document Q&amp;A
-                    </h3>
-                    <p className="text-sm text-slate-600 mb-8 line-clamp-3 leading-relaxed">
-                      Pick a document and ask it a question — watch retrieval-augmented generation (RAG) run step by step, from chunking to a grounded AI answer.
-                    </p>
-                    <div className="mt-auto flex items-center text-sm font-semibold text-indigo-600 group-hover:text-indigo-700 transition-colors">
-                      Try the Demo <ArrowUpRight className="w-4 h-4 ml-1.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                    </div>
-                  </div>
-                </div>
-              </Link>
-
-              {/* Placeholder for future tool demos */}
-              <div className="border border-dashed border-slate-300 rounded-3xl flex flex-col items-center justify-center p-8 text-center bg-slate-50/50 h-full min-h-[400px]">
-                <div className="w-14 h-14 bg-white border border-slate-200 rounded-full flex items-center justify-center mb-5">
-                  <span className="text-slate-400 text-xl font-light">+</span>
-                </div>
-                <h3 className="text-lg font-semibold text-slate-600 mb-3">More Tools Coming Soon</h3>
-                <p className="text-sm text-slate-500 max-w-[250px]">More sample AI tools are on the way, covering other everyday operational bottlenecks.</p>
-              </div>
+            <div className="reveal grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              <ShowcaseCard
+                href="/demos/email-triage"
+                tag="Sales & Support"
+                title="AI Email / Lead Triage"
+                description="Drop in an inbox of raw emails and watch the AI classify intent, score priority, and draft a suggested first reply in seconds."
+                cta="Try the Demo"
+                accent="emerald"
+                icons={[
+                  { icon: Inbox, className: 'border-blue-400/30 bg-blue-500/10 text-blue-300' },
+                  { icon: Sparkles, className: 'border-emerald-400/30 bg-emerald-500/10 text-emerald-300' }
+                ]}
+              />
+              <ShowcaseCard
+                href="/demos/document-qa"
+                tag="Knowledge & Search"
+                title={<>Document Q&amp;A</>}
+                description="Pick a document and ask it a question — watch retrieval-augmented generation (RAG) run step by step, from chunking to a grounded AI answer."
+                cta="Try the Demo"
+                accent="indigo"
+                icons={[
+                  { icon: Layers, className: 'border-indigo-400/30 bg-indigo-500/10 text-indigo-300' },
+                  { icon: Search, className: 'border-blue-400/30 bg-blue-500/10 text-blue-300' }
+                ]}
+              />
+              <PlaceholderCard
+                title="More Tools Coming Soon"
+                text="More sample AI tools are on the way, covering other everyday operational bottlenecks."
+              />
             </div>
           </div>
         </section>
 
         {/* Current Research Section */}
-        <section id="research" className="py-24 bg-[#F8FAFC]">
-          <div className="max-w-6xl mx-auto px-6">
-            <div className="bg-white rounded-[2.5rem] p-8 md:p-16 shadow-sm border border-slate-200">
-              <div className="max-w-3xl">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-50 text-indigo-600 text-sm font-medium mb-8">
-                  Current Research
-                </div>
-                <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-900 mb-6">
-                  We're speaking with operations professionals to understand where manual work creates the most friction.
+        <section id="research" className="py-24 md:py-32">
+          <div className="mx-auto max-w-6xl px-6">
+            <div className="reveal ring-gradient relative overflow-hidden rounded-[2.5rem] bg-white/[0.02] p-8 md:p-16">
+              {/* Radar: listening for where friction lives */}
+              <div aria-hidden className="pointer-events-none absolute -right-28 top-1/2 hidden h-[520px] w-[520px] -translate-y-1/2 overflow-hidden rounded-full xl:block">
+                {[0, 1, 2, 3].map((ring) => (
+                  <div key={ring} className="absolute rounded-full border border-white/[0.06]" style={{ inset: `${ring * 65}px` }} />
+                ))}
+                <div className="absolute inset-0 rounded-full bg-[conic-gradient(from_0deg,transparent_0deg,rgba(129,140,248,0.22)_50deg,transparent_70deg)] motion-safe:animate-radar" />
+                <div className="absolute left-1/2 top-1/2 h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-indigo-300 shadow-[0_0_16px_4px_rgba(129,140,248,0.6)]" />
+                <span className="absolute left-[30%] top-[28%] h-1.5 w-1.5 animate-ping rounded-full bg-cyan-300" />
+                <span className="absolute left-[62%] top-[70%] h-1.5 w-1.5 animate-ping rounded-full bg-violet-300 [animation-delay:700ms]" />
+                <span className="absolute left-[22%] top-[64%] h-1.5 w-1.5 animate-ping rounded-full bg-blue-300 [animation-delay:1400ms]" />
+              </div>
+
+              <div className="relative max-w-2xl">
+                <Eyebrow index="05">Current Research</Eyebrow>
+                <h2 className="mb-8 text-3xl font-semibold tracking-tight text-white md:text-4xl md:leading-[1.15]">
+                  We&apos;re speaking with operations professionals to understand where{' '}
+                  <span className="font-serif font-normal italic text-gradient">manual work creates the most friction.</span>
                 </h2>
-                <div className="space-y-6 text-lg text-slate-600">
+                <div className="space-y-6 text-lg text-slate-400">
                   <p>
-                    We're actively speaking with professionals responsible for operations, maintenance, property management, compliance, reporting, and administrative coordination.
+                    We&apos;re actively speaking with professionals responsible for operations, maintenance, property management, compliance, reporting, and administrative coordination.
                   </p>
-                  <div className="p-6 bg-slate-50 rounded-2xl border border-slate-100 shadow-inner">
-                    <p className="font-semibold text-slate-900 mb-2">The goal is simple:</p>
+                  <div className="relative overflow-hidden rounded-2xl border border-white/5 bg-white/[0.03] p-6 pl-7">
+                    <span aria-hidden className="absolute bottom-0 left-0 top-0 w-[3px] bg-gradient-to-b from-blue-400 via-indigo-400 to-violet-400" />
+                    <p className="mb-2 font-semibold text-white">The goal is simple:</p>
                     <p>Understand where teams spend the most time on manual work and identify opportunities for meaningful automation.</p>
                   </div>
-                  <p className="font-medium text-slate-800">
-                    If you're involved in operational processes and would like to share insights, we'd love to hear from you.
+                  <p className="font-medium text-slate-200">
+                    If you&apos;re involved in operational processes and would like to share insights, we&apos;d love to hear from you.
                   </p>
                 </div>
               </div>
@@ -362,11 +538,12 @@ export default function Home() {
         </section>
 
         {/* About Section */}
-        <section id="about" className="py-24 bg-white">
-          <div className="max-w-6xl mx-auto px-6">
-            <div className="grid md:grid-cols-2 gap-16 items-center">
-              <div className="order-2 md:order-1 relative">
-                <div className="aspect-square rounded-[2.5rem] bg-slate-100 overflow-hidden relative">
+        <section id="about" className="py-24 md:py-32">
+          <div className="mx-auto max-w-6xl px-6">
+            <div className="grid items-center gap-16 md:grid-cols-2">
+              <div className="reveal relative order-2 md:order-1">
+                <div aria-hidden className="absolute -inset-6 rounded-[3rem] bg-gradient-to-tr from-blue-600/25 via-indigo-500/10 to-violet-600/25 blur-2xl" />
+                <div className="ring-gradient relative aspect-square overflow-hidden rounded-[2rem] bg-slate-900">
                   <Image
                     src="/headshot_yasith.png"
                     alt="Yasith"
@@ -374,30 +551,47 @@ export default function Home() {
                     sizes="(max-width: 768px) 100vw, 50vw"
                     className="object-cover"
                   />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#05070d]/80 via-transparent to-transparent" />
+                  <div className="glass absolute bottom-5 left-5 right-5 flex items-center justify-between rounded-2xl border border-white/10 px-4 py-3">
+                    <div>
+                      <p className="text-sm font-medium text-white">Yasith Nirmana</p>
+                      <p className="font-mono text-[11px] uppercase tracking-wider text-slate-400">Founder</p>
+                    </div>
+                    <span className="inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-wider text-emerald-300">
+                      <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-400" />
+                      Open to chat
+                    </span>
+                  </div>
                 </div>
-                {/* Decorative element */}
-                <div className="absolute -bottom-8 -right-8 w-48 h-48 bg-blue-50 rounded-full blur-3xl -z-10"></div>
               </div>
-              <div className="order-1 md:order-2">
-                <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-900 mb-6">
+              <div className="reveal order-1 md:order-2">
+                <Eyebrow index="06">About</Eyebrow>
+                <h2 className="mb-6 text-3xl font-semibold tracking-tight text-white md:text-5xl">
                   About
                 </h2>
-                <div className="mb-6">
-                  <h3 className="text-2xl font-bold text-slate-900">Yasith Nirmana</h3>
-                  <p className="text-blue-600 font-semibold text-lg">Founder, Workflow Labs</p>
-                  <p className="text-sm text-slate-500 mt-1">Software Engineer | MBA | Enterprise Software Experience</p>
+                <div className="mb-8">
+                  <h3 className="text-2xl font-semibold text-white">Yasith Nirmana</h3>
+                  <p className="text-gradient w-fit text-lg font-medium">Founder, Workflow Labs</p>
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    {['Software Engineer', 'MBA', 'Enterprise Software Experience'].map((credential) => (
+                      <span key={credential} className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 font-mono text-[11px] uppercase tracking-wider text-slate-400">
+                        {credential}
+                      </span>
+                    ))}
+                  </div>
                   <a
                     href="https://www.linkedin.com/in/yasith-nirmana/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 text-sm font-semibold text-blue-600 hover:text-blue-700 mt-3 transition-colors group"
+                    className="group mt-5 inline-flex items-center gap-2 text-sm font-medium text-blue-300 transition-colors hover:text-blue-200"
                   >
-                    <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" /></svg>
+                    <svg className="h-4 w-4 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d={linkedInPath} /></svg>
                     LinkedIn Profile
+                    <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
                   </a>
                 </div>
-                <div className="space-y-6 text-lg text-slate-600">
-                  <p className="font-medium text-slate-900">
+                <div className="space-y-6 text-lg text-slate-400">
+                  <p className="font-medium text-slate-100">
                     Built by a software engineer passionate about operational excellence.
                   </p>
                   <p>
@@ -413,23 +607,28 @@ export default function Home() {
         </section>
 
         {/* Contact Section */}
-        <section id="contact" className="py-24 bg-blue-600 text-white relative overflow-hidden">
-          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMSIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjE1KSIvPjwvc3ZnPg==')] opacity-50"></div>
-          <div className="max-w-4xl mx-auto px-6 text-center relative z-10">
-            <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-6">
-              Let's Connect
+        <section id="contact" className="relative isolate overflow-hidden border-t border-white/5 py-32 md:py-40">
+          <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
+            <div className="bg-grid absolute inset-0 [mask-image:radial-gradient(ellipse_60%_70%_at_50%_100%,#000_20%,transparent_100%)]" />
+            <div className="absolute -bottom-40 left-1/2 h-[500px] w-[900px] -translate-x-1/2 rounded-full bg-indigo-600/25 blur-[120px] motion-safe:animate-aurora" />
+            <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-indigo-400/40 to-transparent" />
+          </div>
+          <div className="reveal mx-auto max-w-4xl px-6 text-center">
+            <Eyebrow index="07" className="justify-center">Contact</Eyebrow>
+            <h2 className="mb-6 text-5xl font-semibold tracking-tight text-white md:text-7xl">
+              Let&apos;s <span className="text-gradient font-serif font-normal italic">Connect</span>
             </h2>
-            <p className="text-xl text-blue-100 mb-12 max-w-2xl mx-auto">
+            <p className="mx-auto mb-12 max-w-2xl text-xl text-slate-400">
               Interested in discussing operational challenges, workflow automation, or process improvement?
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-              <a href="mailto:yasith@getworkflowlabs.com" className="flex items-center gap-3 bg-white text-slate-900 px-8 py-4 rounded-full font-semibold hover:bg-blue-50 transition-colors shadow-lg hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0 w-full sm:w-auto justify-center">
-                <Mail className="w-5 h-5 text-blue-600" />
+            <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
+              <a href="mailto:yasith@getworkflowlabs.com" className="flex w-full items-center justify-center gap-3 rounded-full bg-white px-8 py-4 font-semibold text-slate-950 shadow-[0_0_40px_-8px_rgba(129,140,248,0.7)] transition-all hover:-translate-y-0.5 hover:shadow-[0_0_60px_-6px_rgba(129,140,248,0.9)] active:translate-y-0 sm:w-auto">
+                <Mail className="h-5 w-5 text-indigo-600" />
                 yasith@getworkflowlabs.com
               </a>
-              <a href="https://www.linkedin.com/in/yasith-nirmana/" className="flex items-center gap-3 bg-blue-700 text-white px-8 py-4 rounded-full font-semibold hover:bg-blue-800 transition-colors shadow-lg hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0 border border-blue-500 w-full sm:w-auto justify-center">
-                <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" /></svg>
+              <a href="https://www.linkedin.com/in/yasith-nirmana/" target="_blank" rel="noopener noreferrer" className="glass flex w-full items-center justify-center gap-3 rounded-full border border-white/10 px-8 py-4 font-semibold text-white transition-all hover:-translate-y-0.5 hover:bg-white/[0.08] active:translate-y-0 sm:w-auto">
+                <svg className="h-5 w-5 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d={linkedInPath} /></svg>
                 Connect on Linkedin
               </a>
             </div>
@@ -439,23 +638,26 @@ export default function Home() {
       </main>
 
       {/* Footer */}
-      <footer className="bg-slate-950 text-slate-400 py-12 border-t border-slate-900">
-        <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
-          <div className="flex items-center gap-2 text-white font-semibold">
-            <div className="w-6 h-6 rounded bg-blue-600 flex items-center justify-center">
-              <Workflow className="w-3.5 h-3.5 text-white" />
+      <footer className="relative overflow-hidden border-t border-white/5 pt-12 text-slate-500">
+        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-6 px-6 md:flex-row">
+          <div className="flex items-center gap-2 font-semibold text-white">
+            <div className="flex h-6 w-6 items-center justify-center rounded-md bg-gradient-to-br from-blue-500 to-violet-600">
+              <Workflow className="h-3.5 w-3.5 text-white" />
             </div>
             Workflow Labs
           </div>
           <div className="text-center md:text-left">
             <p className="text-sm">Helping businesses streamline operations through automation and AI.</p>
           </div>
-          <div className="text-sm flex flex-col md:items-end items-center gap-1">
+          <div className="flex flex-col items-center gap-1 text-sm md:items-end">
             <span>© 2026 Workflow Labs</span>
-            <Link href="/anti-spam-policy" className="text-slate-500 hover:text-white transition-colors">
+            <Link href="/anti-spam-policy" className="text-slate-500 transition-colors hover:text-white">
               Anti-Spam &amp; Outreach Policy
             </Link>
           </div>
+        </div>
+        <div aria-hidden className="mt-10 select-none whitespace-nowrap text-center text-[13vw] font-semibold leading-[0.8] tracking-tighter text-transparent [background-clip:text] bg-gradient-to-b from-white/[0.08] to-transparent">
+          Workflow Labs
         </div>
       </footer>
 
